@@ -5,11 +5,19 @@ Rails.application.routes.draw do
 
   root to: "homes#top"
 get "home/about" => "homes#about", as: "about"
-resources :users, path_names: { new: "sign_up" }
+resources :users, path_names: { new: "sign_up" } do
+  member do
+    get :following
+    get :followers
+  end
+end
 resources :books do
   resource :favorite, only: [:create, :destroy]
   resources :book_comments, only: [:create, :destroy]
 end
+
+resources :relationships, only: [:create, :destroy]
+
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

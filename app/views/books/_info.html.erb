@@ -12,14 +12,37 @@
       <th>introduction</th>
       <th><%= user.introduction %></th>
     </tr>
+
+<tr>
+  <th>フォロー数</th>
+  <th><%= link_to user.following.count, following_user_path(user) %></th>
+</tr>
+
+<tr>
+  <th>フォロワー数</th>
+  <th><%= link_to user.followers.count, followers_user_path(user) %></th>
+</tr>
+
   </tbody>
 </table>
 
-
+<% if Current.user == user %>
   <%= link_to edit_user_path(user), class: "btn btn-outline-secondary btn-block" do %>
     <i class="fas fa-user-cog"></i>
   <% end %>
 
+<% else %>
+<% if Current.user.following.include?(user) %>
+<%= link_to "フォロー解除",
+    relationship_path(user.id),
+    data: { turbo_method: :delete } %>
+
+<% else %>
+<%= link_to "フォローする",
+    relationships_path(followed_id: user.id),
+    data: { turbo_method: :post } %>
+<% end %>
+<% end %>
 
 <h2 class="mt-3">New book</h2>
 
