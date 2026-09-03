@@ -1,0 +1,38 @@
+<% if @model == "user" %>
+<h2>Users search for "<%= @content %>"</h2>
+
+<table class="table">
+  <tbody>
+    <% @records.each do |user| %>
+      <tr>
+        <td>
+          <%= image_tag user.get_profile_image, size: "50x50" %>
+        </td>
+        <td>
+          <%= link_to user.name, user_path(user) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% else %>
+<h2>Books search for "<%= @content %>"</h2>
+<table class="table">
+  <tbody>
+    <% @records.each do |book| %>
+      <tr>
+  <td>
+    <%= image_tag book.user.get_profile_image, size: "50x50" %>
+  </td>
+  <td>
+    <%= link_to book.title, book_path(book) %>
+  </td>
+  <td>
+    <%= book.body %>
+  </td>
+</tr>
+    <% end %>
+  </tbody>
+</table>
+<% end %>

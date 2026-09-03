@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   
   resource :session
   resources :passwords, param: :token
+  get "search" => "searches#search"
 
   root to: "homes#top"
 get "home/about" => "homes#about", as: "about"

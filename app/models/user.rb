@@ -30,4 +30,16 @@ has_many :followers, through: :passive_relationships, source: :follower
       "no_image.jpg"
 end
 end
+def self.search(content, method)
+  case method
+  when "perfect"
+    where(name: content)
+  when "forward"
+    where("name LIKE ?", "#{content}%")
+  when "backward"
+    where("name LIKE ?", "%#{content}")
+  when "partial"
+    where("name LIKE ?", "%#{content}%")
+  end
+end
 end
