@@ -49,19 +49,11 @@
                 <%= book.body %>
               </td>
 
-              <td>
-                <% if book.favorited_by?(Current.user) %>
-                  <%= link_to book_favorite_path(book),
-                      data: { turbo_method: :delete } do %>
-                    ♥<%= book.favorites.count %>
-                  <% end %>
-                <% else %>
-                  <%= link_to book_favorite_path(book),
-                      data: { turbo_method: :post } do %>
-                    ♡<%= book.favorites.count %>
-                  <% end %>
-                <% end %>
-              </td>
+             <td>
+  <%= turbo_frame_tag dom_id(book, :favorite) do %>
+    <%= render "favorites/favorite_btn", book: book %>
+  <% end %>
+</td>
 
               <td>
                 コメント数: <%= book.book_comments.count %>

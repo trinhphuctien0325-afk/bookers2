@@ -1,0 +1,10 @@
+<%= turbo_stream.update "comments" do %>
+  <%= render "book_comments/comments", book: @book %>
+<% end %>
+
+<%= turbo_stream.update "comment_form" do %>
+  <%= form_with model: [@book, BookComment.new] do |f| %>
+    <%= f.text_area :comment %>
+    <%= f.submit "送信" %>
+  <% end %>
+<% end %>
