@@ -24,10 +24,26 @@ end
   end
 
   def show
-    @user = User.find(params[:id])
-    @books = @user.books
-    @book = Book.new
-  end
+  @user = User.find(params[:id])
+  @books = @user.books
+  @book = Book.new
+
+  @today_book = @books.where(created_at: Time.zone.now.all_day).count
+  @yesterday_book = @books.where(created_at: 1.day.ago.all_day).count
+
+  @this_week_book = @books.where(created_at: 6.days.ago.beginning_of_day..Time.zone.now.end_of_day).count
+  @last_week_book = @books.where(created_at: 13.days.ago.beginning_of_day..7.days.ago.end_of_day).count
+  @books_6_days_ago = @books.where(created_at: 6.days.ago.all_day).count
+@books_5_days_ago = @books.where(created_at: 5.days.ago.all_day).count
+@books_4_days_ago = @books.where(created_at: 4.days.ago.all_day).count
+@books_3_days_ago = @books.where(created_at: 3.days.ago.all_day).count
+@books_2_days_ago = @books.where(created_at: 2.days.ago.all_day).count
+@books_1_day_ago  = @books.where(created_at: 1.day.ago.all_day).count
+@books_today      = @books.where(created_at: Time.zone.now.all_day).count
+if params[:date].present?
+  @search_book = @books.where(created_at: params[:date].to_date.all_day).count
+end
+end
 
   def edit
     @user = User.find(params[:id])
